@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> <%= title %> </title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- CUSTOM CSS -->
+    <%- block('styles') %>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <span class="material-symbols-outlined logo-icon">font_download</span>
+                FontVerse
+            </div>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/how-it-works">How It Works</a>
+                <a href="/gallery">Gallery</a>
+                <a href="/technicality">Technicality</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <%- body %>
+    </main>
+    
+    <footer>
+        <p>The goal of font pairing is to select fonts that share an overarching theme yet have a pleasing contrast.</p>
+        <p>Which fonts work together is largely a matter of intuition, but we approach this problem with a neural net.</p>
+        <a href="https://github.com/mohdsaqib19" class="github-link" target="_blank">
+            <span class="material-symbols-outlined">code</span>
+            View on GitHub
+        </a>
+    </footer>
+    <%- block('scripts') %>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<% layout('base') %> <% block('styles') %>
+<link rel="stylesheet" href="css/index.css" />
+
+<section class="hero">
+  <h1>Generate font combinations with deep learning</h1>
+  <p>
+    Click (Generate) to create a new font pairing, (Lock) to lock fonts you want
+    to keep, and (Edit) to choose a font manually. The text is editable - try
+    replacing it with your company name or other copy.
+  </p>
+
+  <div class="controls">
+    <button class="btn btn-primary" id="generate-btn">
+      <span class="material-symbols-outlined">shuffle</span>
+      Generate New Pairing
+    </button>
+    <button class="btn btn-secondary" id="save-btn">
+      <span class="material-symbols-outlined">bookmark</span>
+      Save This Combo
+    </button>
+  </div>
+</section>
+
+<section class="font-display">
+  <div class="font-card" style="font-family: 'Playfair Display', serif">
+    <div class="font-actions">
+      <button class="action-btn lock-btn" title="Lock this font">
+        <span class="material-symbols-outlined">lock_open</span>
+      </button>
+      <button class="action-btn edit-btn" title="Change this font">
+        <span class="material-symbols-outlined">edit</span>
+      </button>
+    </div>
+    <div class="font-content">
+      <div class="font-header">
+        <div class="font-name">Playfair Display</div>
+      </div>
+      <textarea class="font-preview" style="font-size: 2.5rem">
+Your Brand Name</textarea
+      >
+      <div class="font-info">
+        <span class="font-category">Serif</span>
+        <span>Weight: 400</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="font-card" style="font-family: 'Inter', sans-serif">
+    <div class="font-actions">
+      <button class="action-btn lock-btn" title="Lock this font">
+        <span class="material-symbols-outlined">lock_open</span>
+      </button>
+      <button class="action-btn edit-btn" title="Change this font">
+        <span class="material-symbols-outlined">edit</span>
+      </button>
+    </div>
+    <div class="font-content">
+      <div class="font-header">
+        <div class="font-name">Inter</div>
+      </div>
+      <textarea class="font-preview" style="font-size: 1.8rem">
+Your compelling tagline goes here</textarea
+      >
+      <div class="font-info">
+        <span class="font-category">Sans-Serif</span>
+        <span>Weight: 500</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="font-card" style="font-family: 'Roboto Mono', monospace">
+    <div class="font-actions">
+      <button class="action-btn lock-btn locked" title="Lock this font">
+        <span class="material-symbols-outlined">lock</span>
+      </button>
+      <button class="action-btn edit-btn" title="Change this font">
+        <span class="material-symbols-outlined">edit</span>
+      </button>
+    </div>
+    <div class="font-content">
+      <div class="font-header">
+        <div class="font-name">Roboto Mono</div>
+      </div>
+      <textarea class="font-preview" style="font-size: 1.3rem">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor.</textarea
+      >
+      <div class="font-info">
+        <span class="font-category">Monospace</span>
+        <span>Weight: 400</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- block('scripts') %>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Lock/unlock functionality
+    const lockButtons = document.querySelectorAll(".lock-btn");
+    lockButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        const icon = this.querySelector("span");
+        if (icon.textContent === "lock_open") {
+          icon.textContent = "lock";
+          this.classList.add("locked");
+          this.parentElement.parentElement.style.borderColor = "var(--accent)";
+        } else {
+          icon.textContent = "lock_open";
+          this.classList.remove("locked");
+          this.parentElement.parentElement.style.borderColor =
+            "var(--card-border)";
+        }
+      });
+    });
+
+    // Generate button
+    const generateBtn = document.getElementById("generate-btn");
+    generateBtn.addEventListener("click", function () {
+      // Add loading animation
+      const originalText = this.innerHTML;
+      this.innerHTML = `<span class="material-symbols-outlined">refresh</span> Generating...`;
+      this.disabled = true;
+
+      // Simulate API call
+      setTimeout(() => {
+        // In a real app, this would fetch new font combinations
+        alert("New font pairing generated!");
+        this.innerHTML = originalText;
+        this.disabled = false;
+      }, 1500);
+    });
+
+    // Edit button functionality
+    const editButtons = document.querySelectorAll(".edit-btn");
+    editButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        // In a real app, this would open a font picker modal
+        alert("Font picker would open here");
+      });
+    });
+
+    // Save button
+    const saveBtn = document.getElementById("save-btn");
+    saveBtn.addEventListener("click", function () {
+      alert("This combination has been saved to your favorites!");
+    });
+  });
+</script>
