@@ -1,13 +1,14 @@
 :root {
-  --bg-dark: #0a0a0a;
-  --bg-darker: #050505;
-  --accent: #4361ee;
-  --accent-light: #4895ef;
-  --text-primary: #f8f9fa;
-  --text-secondary: #adb5bd;
-  --card-bg: #161616;
-  --card-border: #2a2a2a;
+  --bg-dark: #1E1E2E;        /* Dark slate blue-gray, easy on eyes */
+  --bg-darker: #151521;      /* Deeper tone for contrast */
+  --accent: #4CC9F0;         /* Bright cyan-blue accent */
+  --accent-light: #90E0EF;   /* Softer sky blue for hover/focus */
+  --text-primary: #E9ECEF;   /* Soft white, not harsh */
+  --text-secondary: #B0B3B8; /* Gentle gray for secondary text */
+  --card-bg: #2B2D42;        /* Slightly lighter than bg for cards */
+  --card-border: #3C3F58;    /* Subtle border for separation */
 }
+
 
 * {
   margin: 0;

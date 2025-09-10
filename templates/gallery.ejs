@@ -2,10 +2,36 @@
 
 <%- block('styles') %>
 <link rel="stylesheet" href="css/gallery.css" />
-<section class="page-header">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+<!-- <section class="page-header">
   <h1>Font Pairing Gallery</h1>
   <p>Explore beautiful font combinations curated by our AI and the design community.</p>
-</section>
+</section> -->
+
+<!-- Search Bar & Category Filters -->
+<div id="searchFilterContainer">
+  <div class="input-group search-bar">
+    <input type="text" id="fontSearch" placeholder="Search fonts..." />
+    <button class="btn btn" id="searchBtn">
+      <i class="bi bi-search"></i>
+    </button>
+  </div>
+
+  <div class="filter-buttons">
+    <button class="filter-btn" data-category="">All</button>
+    <button class="filter-btn" data-category="serif">Serif</button>
+    <button class="filter-btn" data-category="sans-serif">Sans-serif</button>
+    <button class="filter-btn" data-category="display">Display</button>
+    <button class="filter-btn" data-category="handwriting">Handwriting</button>
+    <button class="filter-btn" data-category="monospace">Monospace</button>
+  </div>
+</div>
+
+
+<!-- Link your separate CSS -->
+<!-- <link rel="stylesheet" href="css/search-bar.css" /> -->
+
+
 
 <div class="gallery-grid" id="fontGallery"></div>
 

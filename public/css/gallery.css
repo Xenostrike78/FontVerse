@@ -1,13 +1,14 @@
 :root {
-  --bg-dark: #0a0a0a;
-  --bg-darker: #050505;
-  --accent: #4361ee;
-  --accent-light: #4895ef;
-  --text-primary: #f8f9fa;
-  --text-secondary: #adb5bd;
-  --card-bg: #161616;
-  --card-border: #2a2a2a;
+  --bg-dark: #1E1E2E;        /* Dark slate blue-gray, easy on eyes */
+  --bg-darker: #151521;      /* Deeper tone for contrast */
+  --accent: #4CC9F0;         /* Bright cyan-blue accent */
+  --accent-light: #90E0EF;   /* Softer sky blue for hover/focus */
+  --text-primary: #E9ECEF;   /* Soft white, not harsh */
+  --text-secondary: #B0B3B8; /* Gentle gray for secondary text */
+  --card-bg: #2B2D42;        /* Slightly lighter than bg for cards */
+  --card-border: #3C3F58;    /* Subtle border for separation */
 }
+
 
 * {
   margin: 0;
@@ -305,4 +306,87 @@ footer p {
   .gallery-grid {
     grid-template-columns: 1fr;
   }
+}
+/* search-bar.css */
+/* Container */
+#searchFilterContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Search bar */
+#searchFilterContainer .search-bar {
+  display: flex;
+  width: 100%;
+  max-width: 700px;
+  border-radius: 50px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  border: 2px solid var(--accent);
+}
+
+#searchFilterContainer .search-bar input {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
+  border: none;
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+}
+
+#searchFilterContainer .search-bar input::placeholder {
+  color: var(--text-secondary);
+  opacity: 1;
+}
+
+#searchFilterContainer .search-bar .btn {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  padding: 0 2rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+#searchFilterContainer .search-bar .btn:hover {
+  background-color: var(--accent-light);
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Filter buttons */
+#searchFilterContainer .filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+#searchFilterContainer .filter-buttons .filter-btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--card-border);
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+#searchFilterContainer .filter-buttons .filter-btn:hover,
+#searchFilterContainer .filter-buttons .filter-btn.active {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: white;
 }
