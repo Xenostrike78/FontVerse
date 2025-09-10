@@ -17,10 +17,10 @@
                 FontVerse
             </div>
             <nav>
-                <a href="/">Home</a>
-                <a href="/how-it-works">How It Works</a>
-                <a href="/gallery">Gallery</a>
-                <a href="/technicality">Technicality</a>
+                <a href="/" class="<%= currentUrl === '/' ? 'active' : '' %>">Home</a>
+                <a href="/gallery" class="<%= currentUrl === '/gallery' ? 'active' : '' %>">Gallery</a>
+                <a href="/how-it-works" class="<%= currentUrl === '/how-it-works' ? 'active' : '' %>">How It Works</a>
+                <a href="/technicality" class="<%= currentUrl === '/technicality' ? 'active' : '' %>">Technicality</a>
             </nav>
         </div>
     </header>

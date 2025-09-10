@@ -70,8 +70,8 @@ Your compelling tagline goes here</textarea
 
   <div class="font-card" style="font-family: 'Roboto Mono', monospace">
     <div class="font-actions">
-      <button class="action-btn lock-btn locked" title="Lock this font">
-        <span class="material-symbols-outlined">lock</span>
+      <button class="action-btn lock-btn" title="Lock this font">
+        <span class="material-symbols-outlined">lock_open</span>
       </button>
       <button class="action-btn edit-btn" title="Change this font">
         <span class="material-symbols-outlined">edit</span>
@@ -115,19 +115,53 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. V
 
     // Generate button
     const generateBtn = document.getElementById("generate-btn");
-    generateBtn.addEventListener("click", function () {
+    generateBtn.addEventListener("click", async function () {
       // Add loading animation
       const originalText = this.innerHTML;
       this.innerHTML = `<span class="material-symbols-outlined">refresh</span> Generating...`;
       this.disabled = true;
 
-      // Simulate API call
-      setTimeout(() => {
-        // In a real app, this would fetch new font combinations
-        alert("New font pairing generated!");
+      try{
+        const fonts = await fetchFont();
+        console.log(fonts[0]);
+
+        const fontCards = document.querySelectorAll(".font-card");
+        let fontIndex = 0;
+
+        fontCards.forEach((card)=>{
+          if (card.querySelector(".lock-btn").classList.contains("locked")) {
+            return; // skip to next card
+          }
+          if (!fonts[fontIndex]) return;
+
+          const font = fonts[fontIndex];
+          
+          // load font
+          const link = document.createElement("link");
+          link.rel = "stylesheet";
+          link.href = `https://fonts.googleapis.com/css2?family=${font.family.replace(/ /g, "+")}:wght@400;500;700&display=swap`;
+          document.head.appendChild(link);
+
+          // Apply font-family to card
+          card.style.fontFamily = `'${font.family}', ${font.category}`;
+
+          // Update name
+          card.querySelector(".font-name").textContent = font.family;
+
+          // Update category
+          card.querySelector(".font-category").textContent = font.category;
+
+          // Update weight (just first one)
+          card.querySelector(".font-info span:last-child").textContent =
+            `Weight: ${font.variants[0] || "400"}`;
+          
+            fontIndex++;
+          });
+      }catch(error){
+        console.error("Error Occured!",error);
+      }  
         this.innerHTML = originalText;
         this.disabled = false;
-      }, 1500);
     });
 
     // Edit button functionality
@@ -145,4 +179,23 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. V
       alert("This combination has been saved to your favorites!");
     });
   });
+</script>
+
+<!-- API CALLING -->
+<script>
+  async function fetchFont(){
+    const apiKey = "AIzaSyAXoavmfcp9-DwIUY1jsmn7thegcy9-_80"; // Replace with your key
+    const url = `https://www.googleapis.com/webfonts/v1/webfonts?key=${apiKey}&sort=popularity`;
+
+    try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const shuffle = data.items.sort(()=> Math.random()-0.5);
+    const fonts = shuffle.slice(0,4);
+    return fonts;
+    } catch (error) {
+    console.error("Error fetching fonts:", error);
+    }
+  }
 </script>

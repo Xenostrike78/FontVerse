@@ -1,202 +1,61 @@
-<%- layout('base') %> <%- block('styles') %>
+<%- layout('base') %> 
+
+<%- block('styles') %>
 <link rel="stylesheet" href="css/gallery.css" />
 <section class="page-header">
   <h1>Font Pairing Gallery</h1>
-  <p>
-    Explore beautiful font combinations curated by our AI and the design
-    community
-  </p>
+  <p>Explore beautiful font combinations curated by our AI and the design community.</p>
 </section>
 
-<section class="filters">
-  <button class="filter-btn active">All</button>
-  <button class="filter-btn">Serif Combos</button>
-  <button class="filter-btn">Sans-Serif Combos</button>
-  <button class="filter-btn">Display Fonts</button>
-  <button class="filter-btn">Popular</button>
-  <button class="filter-btn">Recent</button>
-</section>
+<div class="gallery-grid" id="fontGallery"></div>
 
-<div class="gallery-grid" id="fontGallery">
-  <div class="loading">
-    <div class="spinner"></div>
-  </div>
-</div>
-
-<div class="load-more">
-  <button class="btn btn-primary" id="loadMoreBtn">
-    <span class="material-symbols-outlined">add</span>
-    Load More
-  </button>
-</div>
 <%- block('scripts') %>
 <script>
-  document.addEventListener("DOMContentLoaded", async function () {
-    const gallery = document.getElementById("fontGallery");
+document.addEventListener("DOMContentLoaded", async function () {
+  const gallery = document.getElementById("fontGallery");
+  const apiKey = "AIzaSyAXoavmfcp9-DwIUY1jsmn7thegcy9-_80"; // replace with your key
+  let fontsToUse = [];
 
-    function getFallback(category) {
-      switch (category) {
-        case "serif":
-        case "sans-serif":
-        case "monospace":
-          return category;
-        case "handwriting":
-        case "display":
-        default:
-          return "cursive";
-      }
-    }
 
-    async function fetchGoogleFonts() {
-      try {
-        gallery.innerHTML =
-          '<div class="loading"><div class="spinner"></div></div>';
-        const response = await fetch(
-          "https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyCcLri6ws2okbqOmBg2EEOWUCq_BduyThM&sort=popularity"
-        );
-        const data = await response.json();
-        const popularFonts = data.items.slice(0, 30);
-        const pairings = createFontPairings(popularFonts);
-        renderPairings(pairings);
-      } catch (error) {
-        console.error("Error fetching fonts:", error);
-        gallery.innerHTML =
-          '<div class="error">Failed to load fonts. Please try again later.</div>';
-      }
-    }
+  async function fetchGoogleFonts() {
+    try {
+      const response = await fetch(`https://www.googleapis.com/webfonts/v1/webfonts?key=${apiKey}&sort=popularity`);
+      const data = await response.json();
 
-    function createFontPairings(fonts) {
-      const pairings = [];
-      const categories = {
-        serif: fonts.filter((f) => f.category === "serif"),
-        "sans-serif": fonts.filter((f) => f.category === "sans-serif"),
-        display: fonts.filter(
-          (f) => f.category === "display" || f.category === "handwriting"
-        ),
-      };
+      // Shuffle top fonts and take first 10
+      fontsToUse = data.items.sort(() => Math.random() - 0.5).slice(0, 20);
 
-      for (let i = 0; i < 6; i++) {
-        const type = i % 3;
-        if (type === 0) {
-          pairings.push(
-            createPairing(
-              categories["serif"][i % categories["serif"].length],
-              categories["sans-serif"][i % categories["sans-serif"].length],
-              categories["sans-serif"][
-                (i + 1) % categories["sans-serif"].length
-              ]
-            )
-          );
-        } else if (type === 1) {
-          pairings.push(
-            createPairing(
-              categories["display"][i % categories["display"].length],
-              categories["sans-serif"][i % categories["sans-serif"].length],
-              categories["sans-serif"][
-                (i + 1) % categories["sans-serif"].length
-              ]
-            )
-          );
-        } else {
-          pairings.push(
-            createPairing(
-              categories["serif"][i % categories["serif"].length],
-              categories["display"][i % categories["display"].length],
-              categories["sans-serif"][i % categories["sans-serif"].length]
-            )
-          );
-        }
-      }
-
-      return pairings;
-    }
-
-    function createPairing(headerFont, subheaderFont, bodyFont) {
-      return {
-        header: {
-          font: `'${headerFont.family}', ${getFallback(headerFont.category)}`,
-          text: "Sample Header Text",
-        },
-        subheader: {
-          font: `'${subheaderFont.family}', ${getFallback(
-            subheaderFont.category
-          )}`,
-          text: "Beautiful typography combination",
-        },
-        body: {
-          font: `'${bodyFont.family}', ${getFallback(bodyFont.category)}`,
-          text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula.",
-        },
-        fonts: [
-          { name: headerFont.family, category: headerFont.category },
-          { name: subheaderFont.family, category: subheaderFont.category },
-          { name: bodyFont.family, category: bodyFont.category },
-        ],
-        likes: Math.floor(Math.random() * 200),
-        saves: Math.floor(Math.random() * 100),
-      };
-    }
-
-    function renderPairings(pairings) {
-      gallery.innerHTML = "";
-      const allFonts = new Set();
-      pairings.forEach((pair) => {
-        pair.fonts.forEach((font) => {
-          allFonts.add(font.name);
-        });
-      });
-
+      // Dynamically add Google Fonts link
       const link = document.createElement("link");
-      link.href = `https://fonts.googleapis.com/css2?${Array.from(allFonts)
-        .map((f) => `family=${encodeURIComponent(f)}`)
-        .join("&")}&display=swap`;
+      link.href = `https://fonts.googleapis.com/css2?${fontsToUse.map(f => `family=${encodeURIComponent(f.family)}`).join("&")}&display=swap`;
       link.rel = "stylesheet";
       document.head.appendChild(link);
 
-      pairings.forEach((pair) => {
-        const card = document.createElement("div");
-        card.className = "font-pair-card";
-        card.innerHTML = `
-                        <div class="pair-header" style="font-family: ${
-                          pair.header.font
-                        }">${pair.header.text}</div>
-                        <div class="pair-subheader" style="font-family: ${
-                          pair.subheader.font
-                        }">${pair.subheader.text}</div>
-                        <div class="pair-body" style="font-family: ${
-                          pair.body.font
-                        }">${pair.body.text}</div>
-                        <div class="pair-footer">
-                            <div class="font-names">
-                                ${pair.fonts
-                                  .map(
-                                    (font) => `
-                                    <div class="font-name">
-                                        ${font.name} <span class="font-category">${font.category}</span>
-                                    </div>
-                                `
-                                  )
-                                  .join("")}
-                            </div>
-                            <div class="pair-actions">
-                                <button class="action-btn" title="Like">
-                                    <span class="material-symbols-outlined">favorite</span>
-                                    <span>${pair.likes}</span>
-                                </button>
-                                <button class="action-btn" title="Save">
-                                    <span class="material-symbols-outlined">bookmark</span>
-                                    <span>${pair.saves}</span>
-                                </button>
-                                <button class="action-btn" title="Use This Combo">
-                                    <span class="material-symbols-outlined">content_copy</span>
-                                </button>
-                            </div>
-                        </div>
-                    `;
-        gallery.appendChild(card);
-      });
+      renderFonts();
+    } catch (error) {
+      console.error("Error fetching fonts:", error);
+      gallery.innerHTML = '<div class="error">Failed to load fonts. Please try again later.</div>';
     }
+  }
 
-    fetchGoogleFonts();
-  });
+  function renderFonts() {
+    gallery.innerHTML = "";
+
+    fontsToUse.forEach(font => {
+      const card = document.createElement("div");
+      card.className = "font-pair-card";
+      card.innerHTML = `
+        <div class="pair-header" style="font-family: '${font.family}', ${font.category}">${font.family}</div>
+        <div class="pair-subheader" style="font-family: '${font.family}', ${font.category}">The quick brown fox jumps over the lazy dog</div>
+        <div class="pair-body" style="font-family: '${font.family}', ${font.category}">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+        <div class="pair-footer">
+          <div class="font-name">${font.family} <span class="font-category">${font.category}</span></div>
+        </div>
+      `;
+      gallery.appendChild(card);
+    });
+  }
+
+  fetchGoogleFonts();
+});
 </script>
