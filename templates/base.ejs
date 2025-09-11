@@ -6,24 +6,39 @@
     <title> <%= title %> </title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+
     <!-- CUSTOM CSS -->
     <%- block('styles') %>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <div class="logo">
-                <span class="material-symbols-outlined logo-icon">font_download</span>
-                FontVerse
-            </div>
-            <nav>
-                <a href="/" class="<%= currentUrl === '/' ? 'active' : '' %>">Home</a>
-                <a href="/gallery" class="<%= currentUrl === '/gallery' ? 'active' : '' %>">Gallery</a>
-                <a href="/how-it-works" class="<%= currentUrl === '/how-it-works' ? 'active' : '' %>">How It Works</a>
-                <a href="/technicality" class="<%= currentUrl === '/technicality' ? 'active' : '' %>">Technicality</a>
-            </nav>
-        </div>
-    </header>
+<header>
+  <div class="header-content">
+    <div class="logo">
+      <span class="material-symbols-outlined logo-icon">font_download</span>
+      FontVerse
+    </div>
+<nav>
+  <a href="/" class="<%= currentUrl === '/' ? 'active' : '' %>">
+    <i class="fa-solid fa-house"></i> Home
+  </a>
+  <a href="/gallery" class="<%= currentUrl === '/gallery' ? 'active' : '' %>">
+    <i class="fa-solid fa-images"></i> Gallery
+  </a>
+  <a href="/how-it-works" class="<%= currentUrl === '/how-it-works' ? 'active' : '' %>">
+    <i class="fa-solid fa-gears"></i> How It Works
+  </a>
+  <a href="/technicality" class="<%= currentUrl === '/technicality' ? 'active' : '' %>">
+    <i class="fa-solid fa-book"></i> Technicality
+  </a>
+</nav>
+
+  </div>
+</header>
+
     
     <main>
         <%- body %>

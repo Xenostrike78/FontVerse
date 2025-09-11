@@ -26,43 +26,58 @@ body {
   display: flex;
   flex-direction: column;
 }
-
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;      /* sidebar ki fixed width */
+  height: 100vh;
   background-color: var(--bg-darker);
+  border-right: 1px solid var(--card-border);
   padding: 1.5rem;
-  border-bottom: 1px solid var(--card-border);
 }
 
 .header-content {
-  max-width: 1200px;
-  margin: 0 auto;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  height: 100%;
 }
 
 .logo {
   font-size: 1.8rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--accent-light);
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.logo-icon {
-  font-size: 2rem;
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
 }
 
 nav a {
   color: var(--text-secondary);
   text-decoration: none;
-  margin-left: 1.5rem;
   font-weight: 500;
   transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-weight: 800;
+  margin-bottom: 0.1rem;
 }
 
 nav a:hover {
+  color: var(--accent-light);
+}
+nav i{
   color: var(--accent-light);
 }
 
@@ -70,8 +85,8 @@ main {
   flex: 1;
   padding: 2rem;
   max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
+  margin-left: 360px;   /* same as sidebar width */
+  width: calc(100% - 220px);
 }
 
 .hero {
@@ -144,7 +159,7 @@ main {
 }
 
 .font-card {
-  background-color: var(--card-bg);
+  /* background-color: var(--card-bg); */
   border-radius: 42px;
   padding: 1.5rem;
   border: 1px solid var(--card-border);
@@ -155,7 +170,7 @@ main {
 
 .font-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3);
 }
 
 /* Left action bar */
@@ -204,12 +219,12 @@ main {
 }
 
 .font-name {
-  font-weight: 600;
+  font-weight: 50;
   font-size: 1.5rem;
 }
 
 .font-preview {
-  min-height: 150px;
+  min-height: 15px;
   background: transparent;
   border: none;
   color: var(--text-primary);
@@ -250,6 +265,10 @@ footer {
   text-align: center;
   margin-top: 3rem;
   border-top: 1px solid var(--card-border);
+
+  /* Sidebar ke according shift */
+  margin-left: 220px;              /* same as header/sidebar width */
+  width: calc(100% - 220px);       /* remaining space me fit hoga */
 }
 
 footer p {
@@ -265,6 +284,7 @@ footer p {
   text-decoration: none;
   font-weight: 500;
 }
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -310,4 +330,98 @@ footer p {
     font-size: 1.5rem;
     min-height: 100px;
   }
+}
+/* Chatbot widget */
+#chatbot-container {
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+  width: 300px;
+  height: 400px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  display: none; /* hidden by default */
+  flex-direction: column;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  overflow: hidden;
+  z-index: 9999;
+}
+
+#chatbot-header {
+  background-color: var(--accent);
+  color: white;
+  padding: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#chatbot-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+}
+
+#chatbot-messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  font-size: 0.9rem;
+}
+
+#chatbot-input-area {
+  display: flex;
+  border-top: 1px solid var(--card-border);
+}
+
+#chatbot-input {
+  flex: 1;
+  border: none;
+  padding: 0.7rem;
+  outline: none;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+}
+
+#chatbot-send {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  padding: 0 1rem;
+  cursor: pointer;
+}
+#chatbot-toggle .material-symbols-outlined {
+  font-size: 2.8rem; /* or 3rem for even bigger */
+}
+
+
+#chatbot-toggle {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  left: auto;
+  background-color: var(--accent);
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(229, 8, 8, 0.3);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#chatbot-toggle:hover {
+  background-color: rgb(199, 150, 150);
+  width: 90px;
+  height: 90px;
+  color: rgb(218, 50, 50);
+
 }
