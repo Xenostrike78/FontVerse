@@ -3,10 +3,6 @@
 <%- block('styles') %>
 <link rel="stylesheet" href="css/gallery.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-<!-- <section class="page-header">
-  <h1>Font Pairing Gallery</h1>
-  <p>Explore beautiful font combinations curated by our AI and the design community.</p>
-</section> -->
 
 <!-- Search Bar & Category Filters -->
 <div id="searchFilterContainer">
@@ -18,7 +14,7 @@
   </div>
 
   <div class="filter-buttons">
-    <button class="filter-btn" data-category="">All</button>
+    <button class="filter-btn active" data-category="">All</button>
     <button class="filter-btn" data-category="serif">Serif</button>
     <button class="filter-btn" data-category="sans-serif">Sans-serif</button>
     <button class="filter-btn" data-category="display">Display</button>
@@ -34,34 +30,46 @@
 document.addEventListener("DOMContentLoaded", async function () {
   const gallery = document.getElementById("fontGallery");
   const apiKey = "AIzaSyAXoavmfcp9-DwIUY1jsmn7thegcy9-_80"; // replace with your key
+  
   let fontsToUse = [];
+  let currentCategory = "";
+  let searchQuery = "";
+
+  const searchInput = document.getElementById("fontSearch");
+  const searchBtn = document.getElementById("searchBtn");
+  const filterBtns = document.querySelectorAll(".filter-btn");
 
 
   async function fetchGoogleFonts() {
     try {
-      const response = await fetch(`https://www.googleapis.com/webfonts/v1/webfonts?key=${apiKey}&sort=popularity`);
+      const response = await fetch(`https://www.googleapis.com/webfonts/v1/webfonts?key=${apiKey}`);
       const data = await response.json();
 
-      // Shuffle top fonts and take first 10
-      fontsToUse = data.items.sort(() => Math.random() - 0.5).slice(0, 20);
+      // Shuffle top fonts 
+      fontsToUse = data.items.sort(() => Math.random() - 0.5);
 
-      // Dynamically add Google Fonts link
-      const link = document.createElement("link");
-      link.href = `https://fonts.googleapis.com/css2?${fontsToUse.map(f => `family=${encodeURIComponent(f.family)}`).join("&")}&display=swap`;
-      link.rel = "stylesheet";
-      document.head.appendChild(link);
-
-      renderFonts();
+      applyFilters();
     } catch (error) {
       console.error("Error fetching fonts:", error);
       gallery.innerHTML = '<div class="error">Failed to load fonts. Please try again later.</div>';
     }
   }
 
-  function renderFonts() {
+  function renderFonts(fonts) {
     gallery.innerHTML = "";
+    if (fonts.length==0) {
+      gallery.innerHTML = '<div class="error">No fonts found.</div>';
+      return;
+    }
 
-    fontsToUse.forEach(font => {
+    // Dynamically add Google Fonts link
+    const link = document.createElement("link");
+    link.href = `https://fonts.googleapis.com/css2?${fonts.map(f => `family=${encodeURIComponent(f.family)}`).join("&")}&display=swap`;
+    link.rel = "stylesheet";
+    document.head.appendChild(link);
+
+
+    fonts.forEach(font => {
       const card = document.createElement("div");
       card.className = "font-pair-card";
       card.innerHTML = `
@@ -74,6 +82,44 @@ document.addEventListener("DOMContentLoaded", async function () {
       `;
       gallery.appendChild(card);
     });
+  }
+
+
+  searchInput.addEventListener("input", () => {
+    searchQuery = searchInput.value.toLowerCase().trim();
+    applyFilters();
+  });
+  searchBtn.addEventListener("click", () => {
+    searchQuery = searchInput.value.toLowerCase().trim();
+    applyFilters();
+  });
+
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const category = btn.dataset.category.replace(/\s+/g, " ").trim();
+      currentCategory = category === "" ? "" : category;
+      
+      filterBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      applyFilters();
+    });
+  });
+
+  // Apply both filters (search + category)
+  function applyFilters() {
+    let results = fontsToUse;
+
+    if (currentCategory) {
+      results = results.filter(font => font.category.toLowerCase() === currentCategory.toLowerCase());
+    }
+
+    if (searchQuery) {
+      results = results.filter(font => font.family.toLowerCase().includes(searchQuery));
+    }
+
+    renderFonts(results.slice(0, 50)); // limit to first 30 for performance
   }
 
   fetchGoogleFonts();

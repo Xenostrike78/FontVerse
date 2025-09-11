@@ -22,5 +22,5 @@ app.use(express.static(path.join(__dirname,"public")));
 
 app.use("/",mainRoute);
 app.listen(port,()=>
-console.log(`Server running on http://localhost:${port}`)
+console.log(`Server running on http://192.168.1.11:${port}`)
 );

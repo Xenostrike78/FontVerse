@@ -4,7 +4,7 @@ import { title } from "process";
 const router = Router()
 router.get("/",(req,res)=>{
     const content = {
-        title:'FontVerse | Font Combinations',currentUrl:req.path
+        title:'FontVerse | Font Combinations',currentUrl:'/'
     }
     res.render("index",content);
 });
@@ -15,6 +15,7 @@ router.get("/how-it-works",(req,res)=>{
     }
     res.render("how_it_works",content);
 });
+
 router.get("/gallery",(req,res)=>{
     const content = {
         title:"Font Gallery | FontVerse",currentUrl:req.path

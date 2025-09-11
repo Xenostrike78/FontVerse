@@ -390,3 +390,8 @@ footer p {
   border-color: var(--accent);
   color: white;
 }
+
+.filter-btn.active {
+  background-color: #007bff;
+  color: #fff;
+}
