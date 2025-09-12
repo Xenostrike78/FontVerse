@@ -1,5 +1,5 @@
 :root {
-  --bg-dark: #1E1E2E;        /* Dark slate blue-gray, easy on eyes */
+  --bg-dark: #151034;        /* Dark slate blue-gray, easy on eyes */
   --bg-darker: #151521;      /* Deeper tone for contrast */
   --accent: #4CC9F0;         /* Bright cyan-blue accent */
   --accent-light: #90E0EF;   /* Softer sky blue for hover/focus */
@@ -84,10 +84,11 @@ nav i{
 main {
   flex: 1;
   padding: 2rem;
-  max-width: 1200px;
-  margin-left: 360px;   /* same as sidebar width */
+  max-width: 1500px;
+  margin-left: 30vh;   /* ✅ same as sidebar width */
   width: calc(100% - 220px);
 }
+
 
 .hero {
   text-align: center;
@@ -265,11 +266,11 @@ footer {
   text-align: center;
   margin-top: 3rem;
   border-top: 1px solid var(--card-border);
-
-  /* Sidebar ke according shift */
+  /* shift according to sidebar */
   margin-left: 220px;              /* same as header/sidebar width */
   width: calc(100% - 220px);       /* remaining space me fit hoga */
 }
+
 
 footer p {
   color: var(--text-secondary);
