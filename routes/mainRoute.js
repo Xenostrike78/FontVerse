@@ -30,4 +30,11 @@ router.use("/technicality",(req,res)=>{
     res.render("technicality",content);
 });
 
+router.use("/description",(req,res)=>{
+    const content = {
+        title:"Description  | FontVerse",currentUrl:req.path
+    }
+    res.render("description",content);
+});
+
 export default router;
