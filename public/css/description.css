@@ -1,0 +1,118 @@
+:root {
+  --bg-dark: #151034;        /* Dark slate blue-gray, easy on eyes */
+  --bg-darker: #151521;      /* Deeper tone for contrast */
+  --accent: #4CC9F0;         /* Bright cyan-blue accent */
+  --accent-light: #90E0EF;   /* Softer sky blue for hover/focus */
+  --text-primary: #E9ECEF;   /* Soft white, not harsh */
+  --text-secondary: #B0B3B8; /* Gentle gray for secondary text */
+  --card-bg: #2B2D42;        /* Slightly lighter than bg for cards */
+  --card-border: #3C3F58;    /* Subtle border for separation */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;      /* sidebar ki fixed width */
+  height: 100vh;
+  background-color: var(--bg-darker);
+  border-right: 1px solid var(--card-border);
+  padding: 1.5rem;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2rem;
+  height: 100%;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--accent-light);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+}
+
+nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-weight: 800;
+  margin-bottom: 0.1rem;
+}
+
+nav a:hover {
+  color: var(--accent-light);
+}
+nav i{
+  color: var(--accent-light);
+}
+
+main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1500px;
+  margin-left: 220px;   /* ✅ same as sidebar width */
+  width: calc(100% - 220px);
+}
+
+
+
+
+
+
+footer {
+  background-color: var(--bg-darker);
+  padding: 2rem;
+  text-align: center;
+  margin-top: 3rem;
+  border-top: 1px solid var(--card-border);
+  /* shift according to sidebar */
+  margin-left: 220px;              /* same as header/sidebar width */
+  width: calc(100% - 220px);       /* remaining space me fit hoga */
+}
+
+footer p {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent-light);
+  text-decoration: none;
+  font-weight: 500;
+}

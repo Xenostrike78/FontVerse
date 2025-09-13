@@ -85,7 +85,7 @@ main {
   flex: 1;
   padding: 2rem;
   max-width: 1500px;
-  margin-left: 30vh;   /* ✅ same as sidebar width */
+  margin-left: 220px;   /* ✅ same as sidebar width */
   width: calc(100% - 220px);
 }
 
@@ -214,18 +214,25 @@ main {
 
 .font-header {
   display: flex;
+  width: 15vh;
+  background-color: rgba(32, 22, 103, 0.5);
+  border: solid rgb(0, 0, 0) 2px;
+  
+  border-radius: 10px;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.5rem;
 }
 
 .font-name {
+  color: rgb(255, 255, 255);
   font-weight: 50;
   font-size: 1.5rem;
+  margin-left: 8px;
 }
 
 .font-preview {
-  min-height: 15px;
+  min-height: 130px;
   background: transparent;
   border: none;
   color: var(--text-primary);
@@ -270,7 +277,6 @@ footer {
   margin-left: 220px;              /* same as header/sidebar width */
   width: calc(100% - 220px);       /* remaining space me fit hoga */
 }
-
 
 footer p {
   color: var(--text-secondary);
